@@ -4,8 +4,15 @@ declare(strict_types=1);
 
 namespace App\Core;
 
+/**
+ * Representation immuable d'une requete HTTP.
+ */
 final class Request
 {
+    /**
+     * @param array<string, mixed> $queryParams Parametres d'URL.
+     * @param array<string, mixed> $bodyParams Parametres de corps.
+     */
     public function __construct(
         private string $method,
         private string $path,
@@ -14,6 +21,9 @@ final class Request
     ) {
     }
 
+    /**
+     * Cree une requete a partir des superglobales PHP.
+     */
     public static function fromGlobals(): self
     {
         $uri = $_SERVER['REQUEST_URI'] ?? '/';
@@ -37,11 +47,19 @@ final class Request
         return $this->path;
     }
 
+    /**
+     * @param mixed $default
+     * @return mixed
+     */
     public function query(string $key, mixed $default = null): mixed
     {
         return $this->queryParams[$key] ?? $default;
     }
 
+    /**
+     * @param mixed $default
+     * @return mixed
+     */
     public function body(string $key, mixed $default = null): mixed
     {
         return $this->bodyParams[$key] ?? $default;

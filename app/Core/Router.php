@@ -6,21 +6,35 @@ namespace App\Core;
 
 use RuntimeException;
 
+/**
+ * Routeur HTTP minimal base sur une table de callbacks.
+ */
 final class Router
 {
     /** @var array<string, callable> */
     private array $routes = [];
 
+    /**
+     * Enregistre une route GET.
+     */
     public function get(string $path, callable $handler): void
     {
         $this->addRoute('GET', $path, $handler);
     }
 
+    /**
+     * Enregistre une route POST.
+     */
     public function post(string $path, callable $handler): void
     {
         $this->addRoute('POST', $path, $handler);
     }
 
+    /**
+     * Resolut puis execute le handler associe a la requete.
+     *
+     * @throws RuntimeException Si le handler ne retourne pas une Response.
+     */
     public function dispatch(Request $request): Response
     {
         $key = $this->routeKey($request->method(), $request->path());

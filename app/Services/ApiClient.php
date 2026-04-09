@@ -6,12 +6,24 @@ namespace App\Services;
 
 use RuntimeException;
 
+/**
+ * Adaptateur HTTP vers les microservices externes.
+ */
 final class ApiClient
 {
+    /**
+     * @param array<string, mixed> $config
+     */
     public function __construct(private array $config)
     {
     }
 
+    /**
+     * Execute un GET sur un service cible et retourne un tableau decode.
+     *
+     * @return array<int|string, mixed>
+     * @throws RuntimeException Si le service est inconnu ou indisponible hors mode fail-soft.
+     */
     public function get(string $serviceName, string $resource): array
     {
         $baseUrl = $this->config['services'][$serviceName] ?? null;
@@ -43,6 +55,10 @@ final class ApiClient
         return $decoded;
     }
 
+    /**
+     * @return array<int, mixed>
+     * @throws RuntimeException
+     */
     private function fallbackOrThrow(string $message): array
     {
         if (($this->config['fail_soft'] ?? false) === true) {

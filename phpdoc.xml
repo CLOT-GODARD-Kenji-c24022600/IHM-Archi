@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpdocumentor>
+  <title>IHM-Archi API Documentation</title>
+  <paths>
+    <output>docs/api</output>
+  </paths>
+  <version number="1.0.0">
+    <api>
+      <source dsn=".">
+        <path>app/Core</path>
+        <path>app/Controllers</path>
+        <path>app/Services</path>
+      </source>
+      <ignore>
+        <path>app/Views</path>
+      </ignore>
+    </api>
+  </version>
+</phpdocumentor>
+

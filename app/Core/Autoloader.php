@@ -4,8 +4,14 @@ declare(strict_types=1);
 
 namespace App\Core;
 
+/**
+ * Autoloader PSR-4 minimal pour le namespace App.
+ */
 final class Autoloader
 {
+    /**
+     * Enregistre la fonction d'autoload sur SPL.
+     */
     public static function register(string $basePath): void
     {
         spl_autoload_register(static function (string $class) use ($basePath): void {
